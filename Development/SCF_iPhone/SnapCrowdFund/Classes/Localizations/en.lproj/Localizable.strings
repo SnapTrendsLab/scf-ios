@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  SnapCrowdFund
+
+  Created by Sajil on 5/24/13.
+  Copyright (c) 2013 snaptrendslab. All rights reserved.
+*/
+
+
+// ****************** SIGN UP SCREEN ****************** //
+
+"Add Photo"                     = "Add Photo";
+"Cancel"                        = "Cancel";
+"Select from Library"           = "Select from Library";
+"Take a New Photo"              = "Take a New Photo";
+"OK"                            = "OK";
+"No Internet Connection"        = "No Internet Connection.";
+"__ProjectName__"               = "SnapCrowdFund";
+"Please enter a valid email."   = "Please enter a valid email.";
+"First Name cannot be blank."   = "First Name cannot be blank.";
+"Last Name cannot be blank."    = "Last Name cannot be blank.";
+"Password cannot be blank."     = "Password cannot be blank.";
+
+
+// ****************** SOCIAL NETWORK ****************** //
+
+
+"You have rejected the permission for SCF." = "You have rejected the permission for SCF.";
+"Permission for SCF not granted."           = "Permission for SCF not granted.";
+
+// ****************** SIGN IN SCREEN ****************** //

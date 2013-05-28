@@ -10,6 +10,8 @@
 
 @interface SCFViewController ()
 
+@property (strong, nonatomic) UIImageView *imageView;
+
 @end
 
 @implementation SCFViewController
@@ -27,6 +29,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    [self.imageView setImage:[UIImage imageNamed:@"signup_BG.png"]];
+    [self.view addSubview:self.imageView];
 }
 
 - (void)didReceiveMemoryWarning
