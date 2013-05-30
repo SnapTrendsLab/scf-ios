@@ -242,7 +242,7 @@
     [signupUser setObject:self.lastNameField.text forKey:kUserLastName];
 //    [signupUser setObject:@"415-392-0202" forKey:@"phone"];
     
-    __block id blockSelf = self;
+    __weak id blockSelf = self;
     
     
 
@@ -272,17 +272,19 @@
 //        blockSelf = nil;
 //    }];
     
-    [SCFUtility startActivityIndicatorOnView:self.view withText:@"Loading..." BlockUI:YES];
+    [SCFUtility startActivityIndicatorOnView:self.view withText:NSLocalizedString(@"Loading...", @"") BlockUI:YES];
 
     void (^ userSignInBlock)() = ^(void){
+        NSLog(@"Signing up ");
         [signupUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    NSLog(@"Signing up completed");
             [SCFUtility stopActivityIndicatorFromView:self.view];
             [SCFUtility handleParseResponseWithError:error success:succeeded];
             
             if (succeeded)
                 [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
             
-            blockSelf = nil;
+            //blockSelf = nil;
         }];
     };
     
@@ -290,17 +292,20 @@
         userSignInBlock();
     }
     else{
+        mUserImageFile = [PFFile fileWithName:@"userimage.jpg" data:UIImageJPEGRepresentation([self.addPhotoButton imageForState:UIControlStateNormal], 0.6)];
+        [signupUser setObject:mUserImageFile forKey:kUserPic];
+                NSLog(@"Image upoading ");
         [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded)
                 userSignInBlock();
             else
             {
-                [SCFUtility handleParseResponseWithError:error success:succeeded];
                 [SCFUtility stopActivityIndicatorFromView:self.view];
+                [SCFUtility handleParseResponseWithError:error success:succeeded];
             }
-            blockSelf = nil;
+            //blockSelf = nil;
         }];
-    }
+    }    
 }
 
 - (IBAction)takePhotoButtonClick:(id)sender

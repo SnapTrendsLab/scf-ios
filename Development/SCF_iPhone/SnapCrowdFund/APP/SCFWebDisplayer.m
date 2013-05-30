@@ -11,8 +11,10 @@
 #import "UIViewController+JASidePanel.h"
 #import "JASidePanelController.h"
 #import "SCFFontDetails.h"
-
-//#import "SBJSON.h"
+#import "SCFUtility.h"
+#import "SCAppDelegate.h"
+#import "Reachability.h"
+#import "UIAlertView+MKNetworkKitAdditions.h"
 
 @interface SCFWebDisplayer ()
 
@@ -49,7 +51,13 @@
     
     if (self.htmlString) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.htmlString]]];
-    }        
+    }
+    
+    if([[Reachability reachabilityForInternetConnection] currentReachabilityStatus]==NotReachable)
+    {
+        [(SCAppDelegate *)[[UIApplication sharedApplication] delegate] showAlertWithTitle:NSLocalizedString(@"__ProjectName__", @"") message:NSLocalizedString(@"No Internet Connection!", @"")];
+        return;
+    }
 }
 
 #pragma mark - Memory Handling
@@ -82,7 +90,7 @@
 
 -(void)customizeNavigationBar
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
     [backButton setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -100,8 +108,9 @@
         [backButton setTitle:nil forState:UIControlStateNormal];
     }
     else{
-        [backButton setImage:[UIImage imageNamed:@"back_btn_unpress.png"] forState:UIControlStateNormal];
-        [backButton setImage:[UIImage imageNamed:@"back_btn_press.png"] forState:UIControlStateHighlighted];
+        [backButton setBackgroundImage:[UIImage imageNamed:@"back_btn_unpress.png"] forState:UIControlStateNormal];
+        [backButton setBackgroundImage:[UIImage imageNamed:@"back_btn_press.png"] forState:UIControlStateHighlighted];
+        backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 6, 0, 0);
     }
         
     
@@ -312,11 +321,15 @@
     
     the_receivedData = [the_receivedData objectForKey:kAPIResponseDataKey];
     
+    __weak SCFWebDisplayer *weakSelf = self;
+    
+    [SCFUtility startActivityIndicatorOnView:self.view withText:NSLocalizedString(@"Loading...", @"") BlockUI:YES];
     PFObject *bankAccount = [PFObject objectWithClassName:@"BankAccount"];
     [bankAccount setObject:[the_receivedData objectForKey:@"id"] forKey:@"accountId"];
-    [bankAccount setObject:[the_receivedData objectForKey:@"credits_uri"] forKey:@"credis_uri"];
+    [bankAccount setObject:[the_receivedData objectForKey:@"credits_uri"] forKey:@"credits_uri"];
     [bankAccount setObject:[the_receivedData objectForKey:@"uri"] forKey:@"uri"];
     [bankAccount saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [SCFUtility stopActivityIndicatorFromView:self.view];
         if (succeeded == NO) {
             UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
                                                                  message:[error localizedDescription]
@@ -326,11 +339,14 @@
             [errorAlert show];
         }
         else{
-            
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
-                                                             message:NSLocalizedString(@"Your Credit Card details have been successfully updated.", @"")
-                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil, nil];
-            [alert show];
+            [UIAlertView alertViewWithTitle:NSLocalizedString(@"__ProjectName__", @"")
+                                    message:NSLocalizedString(@"Your Bank Account details have been successfully updated.", @"")
+                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                          otherButtonTitles:nil
+                                  onDismiss:nil
+                                   onCancel:^{
+                                       [weakSelf.navigationController popViewControllerAnimated:YES];
+                                   }];
         }
     }];
 }
@@ -347,20 +363,25 @@
     if ([self isCreditCardValid:the_receivedData] == NO) {
         return;
     }
-        
+    
+    __weak SCFWebDisplayer *weakSelf = self;
+
     NSDictionary *the_postData = [the_receivedData objectForKey:kAPIResponseDataKey];
     
+    [SCFUtility startActivityIndicatorOnView:self.view withText:NSLocalizedString(@"Loading...", @"") BlockUI:YES];
     [PFCloud callFunctionInBackground:kParseAPIAddCreditCard
                        withParameters:the_postData
                                 block:^(NSString *result, NSError *error) {
-                                    if (!error) {
-                                        // result is @"Hello world!"
-                                        NSLog(@"Result : %@",result);
-                                        
-                                        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
-                                                                                         message:NSLocalizedString(@"Your Bank Account details have been successfully updated.", @"")
-                                                                                        delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil, nil];
-                                        [alert show];
+                                    [SCFUtility stopActivityIndicatorFromView:self.view];
+                                    if (!error) {                                        
+                                        [UIAlertView alertViewWithTitle:NSLocalizedString(@"__ProjectName__", @"")
+                                                                message:NSLocalizedString(@"Your Credit Card details have been successfully updated.", @"")
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                      otherButtonTitles:nil
+                                                              onDismiss:nil
+                                                               onCancel:^{
+                                                                   [weakSelf.navigationController popViewControllerAnimated:YES];
+                                                               }];
                                     }
                                     else
                                     {

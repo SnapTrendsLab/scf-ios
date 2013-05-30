@@ -106,49 +106,49 @@
     SCFActivity *firstActivity = [[SCFActivity alloc] init];
     firstActivity.activityName = @"iPhone 5";
     firstActivity.activityAmount = [NSNumber numberWithInt:93];
-    firstActivity.activityDescription = @"";
+    firstActivity.activityDescription = @"Black cased iPhone";
     
     
     SCFActivity *secondActivity = [[SCFActivity alloc] init];
     secondActivity.activityName = @"Mac Book Air";
     secondActivity.activityAmount = [NSNumber numberWithInt:30];
-    secondActivity.activityDescription = @"";
+    secondActivity.activityDescription = @"Attractive discount offer of 1200$";
     
     
     SCFActivity *thirdActivity = [[SCFActivity alloc] init];
     thirdActivity.activityName = @"Flowers";
     thirdActivity.activityAmount = [NSNumber numberWithInt:13];
-    thirdActivity.activityDescription = @"";
+    thirdActivity.activityDescription = @"Flowers";
     
     
     SCFActivity *fourthActivity = [[SCFActivity alloc] init];
     fourthActivity.activityName = @"Birthday Gift";
     fourthActivity.activityAmount = [NSNumber numberWithInt:22];
-    fourthActivity.activityDescription = @"";
+    fourthActivity.activityDescription = @"Birthday Gift";
     
     
     SCFActivity *fifthActivity = [[SCFActivity alloc] init];
     fifthActivity.activityName = @"John's B'day";
     fifthActivity.activityAmount = [NSNumber numberWithInt:24];
-    fifthActivity.activityDescription = @"";
+    fifthActivity.activityDescription = @"John i sturning out 20 this week";
     
     
     SCFActivity *sixthActivity = [[SCFActivity alloc] init];
     sixthActivity.activityName = @"Lilly's Baptism";
     sixthActivity.activityAmount = [NSNumber numberWithInt:39];
-    sixthActivity.activityDescription = @"";
+    sixthActivity.activityDescription = @"Lilly's Baptism";
     
     
     SCFActivity *seventhActivity = [[SCFActivity alloc] init];
     seventhActivity.activityName = @"Crciket Match";
     seventhActivity.activityAmount = [NSNumber numberWithInt:55];
-    seventhActivity.activityDescription = @"";
+    seventhActivity.activityDescription = @"Match Fixing";
     
     
     SCFActivity *eighthActivity = [[SCFActivity alloc] init];
     eighthActivity.activityName = @"Football Tornament";
     eighthActivity.activityAmount = [NSNumber numberWithInt:63];
-    eighthActivity.activityDescription = @"";
+    eighthActivity.activityDescription = @"Match Fixing";
     
     [self.datasource addObject:firstActivity];
     [self.datasource addObject:secondActivity];
@@ -267,7 +267,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 70;
 }
 
 #pragma mark - AwesomeMenu Delegates

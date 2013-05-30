@@ -95,7 +95,12 @@ static NSDateFormatter * dateFormatter;
     return result;
 }
 
-
++ (NSString *)generateTheImageUploadName
+{
+//    NSString * videokey = [NSString stringWithFormat:@"%@/%lf.jpg",@"",[[NSDate date] timeIntervalSince1970]];
+    NSString * videokey = [NSString stringWithFormat:@"%@/%lf.jpg",@"",[[NSDate date] timeIntervalSince1970]];
+    return videokey;
+}
 
 +(UIImage *)gtm_image:(UIImage* )inputImage ByResizingToSize:(CGSize)targetSize
   preserveAspectRatio:(BOOL)preserveAspectRatio
@@ -188,8 +193,7 @@ static NSDateFormatter * dateFormatter;
 	return resizedPhoto;
 }
 
-#pragma mark --
-#pragma mark CustomActivityIndicatior
+#pragma mark - CustomActivityIndicatior -
 
 /**
  Class method to start activity indicator and adds it to super view

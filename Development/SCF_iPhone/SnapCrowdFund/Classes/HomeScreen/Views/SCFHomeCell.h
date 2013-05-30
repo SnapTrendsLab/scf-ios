@@ -14,4 +14,7 @@
 
 @property (weak, nonatomic) SCFActivity *activity;
 
+@property (strong, nonatomic) UILabel *descLabel;
+
+
 @end

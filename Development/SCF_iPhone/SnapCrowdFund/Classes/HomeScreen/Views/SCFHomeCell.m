@@ -16,6 +16,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.descLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.descLabel.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:self.descLabel];
     }
     return self;
 }
@@ -38,6 +41,14 @@
 {
     NSLog(@"Text : %@",_activity.activityName);
     [self.textLabel setText:_activity.activityName];
+    [self.descLabel setText:_activity.activityDescription];
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self.imageView setFrame:CGRectMake(10, 10, 50, 50)];
+    [self.textLabel setFrame:CGRectMake(70, 15, 220, 20)];
+    [self.descLabel setFrame:CGRectMake(70, 40, 220, 20)];
 }
 
 @end

@@ -116,8 +116,6 @@
 		C121576C17562577003E7FFC /* SCSidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C121576617562577003E7FFC /* SCSidebarViewController.xib */; };
 		C121576D17562577003E7FFC /* SCFSidePanelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C121576A17562577003E7FFC /* SCFSidePanelCell.m */; };
 		C121577017562592003E7FFC /* SCFSideBarObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C121576F17562592003E7FFC /* SCFSideBarObject.m */; };
-		C121577517564DEF003E7FFC /* SCFSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C121577317564DEF003E7FFC /* SCFSettingsController.m */; };
-		C121577617564DEF003E7FFC /* SCFSettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C121577417564DEF003E7FFC /* SCFSettingsController.xib */; };
 		C1297EC8174F719D006A2CD2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1297EC7174F719D006A2CD2 /* UIKit.framework */; };
 		C1297ECA174F719D006A2CD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1297EC9174F719D006A2CD2 /* Foundation.framework */; };
 		C1297ECC174F719D006A2CD2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1297ECB174F719D006A2CD2 /* CoreGraphics.framework */; };
@@ -176,6 +174,10 @@
 		C1E0BA961756664A002E994F /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E0BA921756664A002E994F /* AwesomeMenu.m */; };
 		C1E0BA971756664A002E994F /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E0BA941756664A002E994F /* AwesomeMenuItem.m */; };
 		C1E0BA9A1756A4B0002E994F /* home_screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E0BA991756A4B0002E994F /* home_screen@2x.png */; };
+		C1E0BAA417574B42002E994F /* SCFSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E0BAA217574B42002E994F /* SCFSettingsController.m */; };
+		C1E0BAA517574B42002E994F /* SCFSettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1E0BAA317574B42002E994F /* SCFSettingsController.xib */; };
+		C1E0BAA817574CF3002E994F /* SCFSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E0BAA717574CF3002E994F /* SCFSetting.m */; };
+		C1E0BAAB17574D10002E994F /* SCFSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E0BAAA17574D10002E994F /* SCFSettingCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -296,9 +298,6 @@
 		C121576A17562577003E7FFC /* SCFSidePanelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFSidePanelCell.m; sourceTree = "<group>"; };
 		C121576E17562592003E7FFC /* SCFSideBarObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFSideBarObject.h; sourceTree = "<group>"; };
 		C121576F17562592003E7FFC /* SCFSideBarObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFSideBarObject.m; sourceTree = "<group>"; };
-		C121577217564DEF003E7FFC /* SCFSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFSettingsController.h; sourceTree = "<group>"; };
-		C121577317564DEF003E7FFC /* SCFSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFSettingsController.m; sourceTree = "<group>"; };
-		C121577417564DEF003E7FFC /* SCFSettingsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCFSettingsController.xib; sourceTree = "<group>"; };
 		C1297EC4174F719D006A2CD2 /* SnapCrowdFund.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapCrowdFund.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1297EC7174F719D006A2CD2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C1297EC9174F719D006A2CD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -408,6 +407,13 @@
 		C1E0BA991756A4B0002E994F /* home_screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_screen@2x.png"; sourceTree = "<group>"; };
 		C1E0BA9B175722CA002E994F /* SCFAnimatedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFAnimatedMenu.h; sourceTree = "<group>"; };
 		C1E0BA9C175722CA002E994F /* SCFAnimatedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFAnimatedMenu.m; sourceTree = "<group>"; };
+		C1E0BAA117574B42002E994F /* SCFSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFSettingsController.h; sourceTree = "<group>"; };
+		C1E0BAA217574B42002E994F /* SCFSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFSettingsController.m; sourceTree = "<group>"; };
+		C1E0BAA317574B42002E994F /* SCFSettingsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCFSettingsController.xib; sourceTree = "<group>"; };
+		C1E0BAA617574CF3002E994F /* SCFSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFSetting.h; sourceTree = "<group>"; };
+		C1E0BAA717574CF3002E994F /* SCFSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFSetting.m; sourceTree = "<group>"; };
+		C1E0BAA917574D10002E994F /* SCFSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFSettingCell.h; sourceTree = "<group>"; };
+		C1E0BAAA17574D10002E994F /* SCFSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFSettingCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -778,9 +784,9 @@
 		C121577117564D97003E7FFC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C121577217564DEF003E7FFC /* SCFSettingsController.h */,
-				C121577317564DEF003E7FFC /* SCFSettingsController.m */,
-				C121577417564DEF003E7FFC /* SCFSettingsController.xib */,
+				C1E0BA9E17574B42002E994F /* Modal */,
+				C1E0BA9F17574B42002E994F /* View */,
+				C1E0BAA017574B42002E994F /* ViewController */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1228,6 +1234,34 @@
 			path = AwesomeMenu;
 			sourceTree = "<group>";
 		};
+		C1E0BA9E17574B42002E994F /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				C1E0BAA617574CF3002E994F /* SCFSetting.h */,
+				C1E0BAA717574CF3002E994F /* SCFSetting.m */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		C1E0BA9F17574B42002E994F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C1E0BAA917574D10002E994F /* SCFSettingCell.h */,
+				C1E0BAAA17574D10002E994F /* SCFSettingCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C1E0BAA017574B42002E994F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C1E0BAA117574B42002E994F /* SCFSettingsController.h */,
+				C1E0BAA217574B42002E994F /* SCFSettingsController.m */,
+				C1E0BAA317574B42002E994F /* SCFSettingsController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1389,8 +1423,8 @@
 				C121576117561DBD003E7FFC /* terms@2x.png in Resources */,
 				C121576217561DBD003E7FFC /* Default-568h@2x.png in Resources */,
 				C121576C17562577003E7FFC /* SCSidebarViewController.xib in Resources */,
-				C121577617564DEF003E7FFC /* SCFSettingsController.xib in Resources */,
 				C1E0BA9A1756A4B0002E994F /* home_screen@2x.png in Resources */,
+				C1E0BAA517574B42002E994F /* SCFSettingsController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1436,9 +1470,11 @@
 				C121576B17562577003E7FFC /* SCSidebarViewController.m in Sources */,
 				C121576D17562577003E7FFC /* SCFSidePanelCell.m in Sources */,
 				C121577017562592003E7FFC /* SCFSideBarObject.m in Sources */,
-				C121577517564DEF003E7FFC /* SCFSettingsController.m in Sources */,
 				C1E0BA961756664A002E994F /* AwesomeMenu.m in Sources */,
 				C1E0BA971756664A002E994F /* AwesomeMenuItem.m in Sources */,
+				C1E0BAA417574B42002E994F /* SCFSettingsController.m in Sources */,
+				C1E0BAA817574CF3002E994F /* SCFSetting.m in Sources */,
+				C1E0BAAB17574D10002E994F /* SCFSettingCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

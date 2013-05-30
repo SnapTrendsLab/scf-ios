@@ -136,5 +136,19 @@
     }
 }
 
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 100)];
+//    headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//    headerView.opaque = NO;
+//
+//    UIImage *bgImage = [UIImage imageNamed:@"large_box.png"];
+//    UIImageView *headerImage = [[UIImageView alloc] initWithImage:bgImage];
+//    [headerImage setFrame:CGRectMake(9, 20, bgImage.size.width, bgImage.size.height)];
+//    [headerView addSubview:headerImage];
+//    
+//    return headerView;
+//}
+
 
 @end

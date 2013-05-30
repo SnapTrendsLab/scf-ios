@@ -8,7 +8,7 @@
 
 #import "SCFViewController.h"
 
-@interface SCFSettingsController : SCFViewController
+@interface SCFSettingsController : SCFViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
