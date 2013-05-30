@@ -9,7 +9,7 @@
 #import "SCAppDelegate.h"
 
 #import "StringConstants.h"
-#import "SCLoginViewController.h"
+#import "SCFInitialViewController.h"
 #import "JASidePanelController.h"
 
 #import "SCFHomeViewController.h"
@@ -49,7 +49,7 @@
     [self.window makeKeyAndVisible];
 
     if ([PFUser currentUser] == nil) {
-        SCLoginViewController *loginVC = [[SCLoginViewController alloc] init];
+        SCFInitialViewController *loginVC = [[SCFInitialViewController alloc] init];
         [rootVC presentModalViewController:[[UINavigationController alloc] initWithRootViewController:loginVC] animated:NO];
     }
     

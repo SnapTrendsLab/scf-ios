@@ -42,6 +42,6 @@ typedef void(^SCFSocialEngineCompletionHandler)(NSDictionary *responseInfo);
 - (void)removeCompletionHandlerForConnectionID:(NSString *)inConnectionID;
 - (SCFSocialEngineCompletionHandler)completionHandlerForConnectionID:(NSString *)inConnectionID;
 - (void)cancelAllRequests;
-- (void)invokeCompletionHandlerWithConnectionID:(NSString *)inConnectionID result:(id)inResult error:(NSError *)inError statusCode:(eHTTPResponseStatusCode)inStatusCode;
+- (void)invokeCompletionHandlerWithConnectionID:(NSString *)inConnectionID result:(id)inResult error:(NSError *)inError statusCode:(SCFHTTPResponseStatusCode)inStatusCode;
 
 @end

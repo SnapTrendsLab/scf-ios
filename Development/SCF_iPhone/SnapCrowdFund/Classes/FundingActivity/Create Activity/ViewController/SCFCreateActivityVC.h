@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCFViewController.h"
+#import "SCFEnums.h"
 
-typedef enum {
-    eSCFActivityCrowd,
-    eSCFActivityGroup,
-    eSCFActivityPersonal,
-}SCFActivityType;
+@class SCFViewController, SCFActivity, SCFCrowdActivityView, SCFGroupActivityView, SCFPersonalActivityView;
 
-@interface SCFCreateActivityVC : SCFViewController
+@interface SCFCreateActivityVC : UIViewController
+{
+    SCFCrowdActivityView    *crowdActivityView;
+    SCFGroupActivityView    *groupActiityView;
+    SCFPersonalActivityView *personalActivityView;
+}
 
 @property (assign, nonatomic) SCFActivityType activityType;
+@property (strong, nonatomic) SCFActivity *activity;
+
 
 @end

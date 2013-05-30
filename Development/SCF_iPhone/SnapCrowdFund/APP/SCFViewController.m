@@ -30,14 +30,27 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [self.imageView setImage:[UIImage imageNamed:@"signup_BG.png"]];
+
+    if (_backgroundImage == nil) {
+        self.backgroundImage = [UIImage imageNamed:@"signup_BG.png"];
+    }
+    
+    [self.imageView setImage:_backgroundImage];
+
     [self.view addSubview:self.imageView];
+    [self.view sendSubviewToBack:self.imageView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setBackgroundImage:(UIImage *)iImage
+{
+    _backgroundImage = iImage;
+    [self.imageView setImage:_backgroundImage];
 }
 
 @end

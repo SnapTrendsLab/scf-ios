@@ -118,7 +118,7 @@ NSString *const SCFSocialEngineStatusCodeKey = @"StatusCode";
     [mBlockMaps removeAllObjects];
 }
 
-- (void)invokeCompletionHandlerWithConnectionID:(NSString *)inConnectionID result:(id)inResult error:(NSError *)inError statusCode:(eHTTPResponseStatusCode)inStatusCode
+- (void)invokeCompletionHandlerWithConnectionID:(NSString *)inConnectionID result:(id)inResult error:(NSError *)inError statusCode:(SCFHTTPResponseStatusCode)inStatusCode
 {
     SCFSocialEngineCompletionHandler completionHanlder = [self completionHandlerForConnectionID:inConnectionID];
     

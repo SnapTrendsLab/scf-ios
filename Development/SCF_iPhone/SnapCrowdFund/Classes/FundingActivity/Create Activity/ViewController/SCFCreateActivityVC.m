@@ -7,6 +7,10 @@
 //
 
 #import "SCFCreateActivityVC.h"
+#import "SCFCrowdActivityView.h"
+#import "SCFGroupActivityView.h"
+#import "SCFPersonalActivityView.h"
+#import "SCFActivity.h"
 
 @interface SCFCreateActivityVC ()
 
@@ -19,6 +23,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.activityType = eSCFActivityCrowd;
+        self.activity = [[SCFActivity alloc] init];
     }
     return self;
 }
@@ -29,6 +35,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [self customizeNavigationBar];
+    [self createActiveFundView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +54,7 @@
     [leftButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [leftButton setBackgroundImage:[UIImage imageNamed:@"signin_unpress.png"] forState:UIControlStateNormal];
     [leftButton setBackgroundImage:[UIImage imageNamed:@"signin_press.png"] forState:UIControlStateHighlighted];
-    [leftButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [leftButton setTitleColor:[UIColor colorWithRed:117/255.0 green:126/255.0 blue:134/255.0 alpha:1.0] forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
     leftButton.titleLabel.shadowOffset = CGSizeMake(0, 0.5);
@@ -74,12 +81,33 @@
     [rightButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"signin_unpress.png"] forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"signin_press.png"] forState:UIControlStateHighlighted];
-    [rightButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(continueButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton setTitleColor:[UIColor colorWithRed:117/255.0 green:126/255.0 blue:134/255.0 alpha:1.0] forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
     rightButton.titleLabel.shadowOffset = CGSizeMake(0, 0.5);
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+}
+
+- (void)createActiveFundView
+{
+    switch (self.activityType) {
+        case eSCFActivityCrowd:
+        {
+            if (!crowdActivityView) {
+                crowdActivityView = [[SCFCrowdActivityView alloc] initWithFrame:self.view.bounds];
+            }
+            
+            if (nil == crowdActivityView.superview) {
+                [self.view addSubview:crowdActivityView];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark - Button Actions

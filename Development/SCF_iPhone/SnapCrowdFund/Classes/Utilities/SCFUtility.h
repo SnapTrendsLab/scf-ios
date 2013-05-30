@@ -24,4 +24,7 @@
 
 + (BOOL)validateLengthForText:(NSString *)inText withReplacementText:(NSString *)inReplaceText inRange:(NSRange)inRange toBoundaryLength:(NSUInteger)inBoundaryLength;
 
+// Handles the parse error & displays the alert to user if needed.
++ (void)handleParseResponseWithError:(NSError *)iError success:(BOOL)iSuccess;
+
 @end

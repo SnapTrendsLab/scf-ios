@@ -576,7 +576,7 @@
         [buttonsArray addObject:((ACAccount*)obj).username];
     }];
     
-    WICustomPickerView *selectGenderPicker = [[WICustomPickerView alloc]initWithFrame:[[[UIApplication sharedApplication] keyWindow]frame] AndPickerType:eSelectAccountFromtwitterPicker];
+    SCFPickerView *selectGenderPicker = [[SCFPickerView alloc]initWithFrame:[[[UIApplication sharedApplication] keyWindow]frame] AndPickerType:eSelectAccountFromtwitterPicker];
     selectGenderPicker.delegate=self;
     selectGenderPicker.dataArrayForPickerView = buttonsArray;
     
@@ -584,7 +584,7 @@
     
 }
 
-- (void)selectedIndexFromPicker : (NSInteger )selection OfType:(WIPickerType) pickerType
+- (void)selectedIndexFromPicker : (NSInteger )selection OfType:(SCFPickerType) pickerType
 {
     NSLog(@"%d",selection);
     

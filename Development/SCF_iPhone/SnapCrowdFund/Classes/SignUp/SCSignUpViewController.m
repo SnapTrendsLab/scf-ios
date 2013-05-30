@@ -13,7 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "StringConstants.h"
 #import "UIAlertView+MKNetworkKitAdditions.h"
-
+#import "SCFFontDetails.h"
 #import "SCFSocialEngine.h"
 #import "SCFSocialEngineFactory.h"
 
@@ -28,7 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        signupUser = [PFUser user];
+        //signupUser = [PFUser user];
 
     }
     return self;
@@ -43,10 +43,11 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"signup_BG.png"]];
     
     self.addPhotoButton.imageView.layer.cornerRadius = 8.0;
+    self.addPhotoButton.imageView.contentMode = UIViewContentModeScaleToFill;
     self.facebookButton.tag = eSCSocialEngineFacebook;
     self.twitterButton.tag = eSCSocialEngineTwitter;
     
-    [self customizeTheNavigationBar];
+    [self customizeTheNavigationBar];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,38 +69,39 @@
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0, 0, 60, 30)];
-    [leftButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [leftButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [leftButton setTitle:NSLocalizedString(@"Cancel", @"") forState:UIControlStateNormal];
+    [leftButton setTitleShadowColor:kNavSideButtonShadowNormalColor forState:UIControlStateNormal];
     [leftButton setBackgroundImage:[UIImage imageNamed:@"signin_unpress.png"] forState:UIControlStateNormal];
     [leftButton setBackgroundImage:[UIImage imageNamed:@"signin_press.png"] forState:UIControlStateHighlighted];
     [leftButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton setTitleColor:[UIColor colorWithRed:117/255.0 green:126/255.0 blue:134/255.0 alpha:1.0] forState:UIControlStateNormal];
-    leftButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
-    leftButton.titleLabel.shadowOffset = CGSizeMake(0, 0.5);
+    [leftButton setTitleColor:kNavSideButtonTitleNormalColor forState:UIControlStateNormal];
+    leftButton.titleLabel.font = kNavSideButtonTitleFont;
+    leftButton.titleLabel.shadowOffset = kNavSideButtonShadowOffset;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
     // Configuring the Title View
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.text = @"Sign Up";
+    titleLabel.text = NSLocalizedString(@"Sign Up", @"");
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0];
-    titleLabel.shadowOffset = CGSizeMake(0, 1);
-    titleLabel.shadowColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    titleLabel.font = kAppNavBarTitleFont;
+    titleLabel.shadowOffset = kAppNavBarTitleShadowOffset;
+    titleLabel.textColor = kAppNavBarTitleColor;
+    titleLabel.shadowColor = kAppNavBarTitleShadowColor;
     self.navigationItem.titleView = titleLabel;
 
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectMake(0, 0, 60, 30)];
-    [rightButton setTitle:@"Done" forState:UIControlStateNormal];
-    [rightButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+    [rightButton setTitleShadowColor:kNavSideButtonShadowNormalColor forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"signin_unpress.png"] forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"signin_press.png"] forState:UIControlStateHighlighted];
-    [rightButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton setTitleColor:[UIColor colorWithRed:117/255.0 green:126/255.0 blue:134/255.0 alpha:1.0] forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
-    rightButton.titleLabel.shadowOffset = CGSizeMake(0, 0.5);
+    [rightButton addTarget:self action:@selector(signUpButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton setTitleColor:kNavSideButtonTitleNormalColor forState:UIControlStateNormal];
+    rightButton.titleLabel.font = kNavSideButtonTitleFont;
+    rightButton.titleLabel.shadowOffset = kNavSideButtonShadowOffset;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 }
@@ -163,6 +165,51 @@
     return retVal;
 }
 
+
+-(void)downloadProfileImageFromURLString : (NSString *)inUrlString
+{
+    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+    dispatch_async(backgroundQueue,^{
+        // background process
+        NSURL * imageURL = [NSURL URLWithString:inUrlString];
+        NSData * imageData = [[NSData alloc]initWithContentsOfURL:imageURL];
+        UIImage * image = [UIImage imageWithData:imageData];
+//        UIImage *resizedimgae = [SCFUtility gtm_image:image ByResizingToSize:CGSizeMake(self.addPhotoButton.frame.size.width, self.addPhotoButton.frame.size.height) preserveAspectRatio:YES trimToFit:YES];
+                UIImage *resizedimgae = image;
+        dispatch_async(dispatch_get_main_queue(),^
+                       {
+                           self.addPhotoButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                           [UIView animateWithDuration:0.20 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^
+                            {
+                                self.addPhotoButton.transform = CGAffineTransformMakeScale(1.05f,1.05f);
+                            }
+                                            completion:^(BOOL finished)
+                            {
+                                
+                                [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                     self.addPhotoButton.transform = CGAffineTransformMakeScale(1.0f,1.0f);
+                                 }
+                                                 completion:nil];
+                            }];
+                           
+                           
+                           if (image)
+                           {
+                               [self.addPhotoButton setImage:resizedimgae forState:UIControlStateNormal];
+                               [self.addPhotoButton setImage:resizedimgae forState:UIControlStateSelected];
+                               [self.addPhotoButton setImage:resizedimgae forState:UIControlStateHighlighted];
+                           }
+                           else
+                           {
+                               NSLog(@"image not downloaded");
+                           }
+                           
+                       });
+    });
+    
+}
+
 #pragma mark - Button Actions -
 
 - (void)backButtonAction
@@ -184,7 +231,7 @@
         return;
     }
     
-    
+    PFUser      *signupUser = [PFUser user];
     signupUser.username = self.emailTextField.text;
     signupUser.password = self.passwordField.text;
     signupUser.email = self.emailTextField.text;
@@ -196,35 +243,64 @@
 //    [signupUser setObject:@"415-392-0202" forKey:@"phone"];
     
     __block id blockSelf = self;
-
-    if (mUserImageFile && mUserImageFile.isDirty) {
-        NSLog(@"Dirty while image uploading");
-        [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [SCFUtility stopActivityIndicatorFromView:self.view];
-            
-            if (error) {
-                [(SCAppDelegate *)[[UIApplication sharedApplication] delegate] showAlertWithTitle:@"__ProjectName__" message:[[error userInfo] objectForKey:@"error"]];
-            }
-            else
-                [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
-            blockSelf = nil;
-        }];
-        return;
-    }
     
+    
+
+//    if (mUserImageFile && mUserImageFile.isDirty) {
+//        NSLog(@"Dirty while image uploading");
+//        [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            [SCFUtility stopActivityIndicatorFromView:self.view];
+//            [SCFUtility handleParseResponseWithError:error success:succeeded];
+//            
+//            if (succeeded)
+//                [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
+//            
+//            blockSelf = nil;
+//        }];
+//        return;
+//    }
+//    
+//    
+//    [SCFUtility startActivityIndicatorOnView:self.view withText:@"Loading..." BlockUI:YES];
+//    [signupUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        [SCFUtility stopActivityIndicatorFromView:self.view];
+//        [SCFUtility handleParseResponseWithError:error success:succeeded];
+//        
+//        if (succeeded)
+//            [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
+//
+//        blockSelf = nil;
+//    }];
     
     [SCFUtility startActivityIndicatorOnView:self.view withText:@"Loading..." BlockUI:YES];
-    [signupUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [SCFUtility stopActivityIndicatorFromView:self.view];
-        
-        if (error) {
-            [(SCAppDelegate *)[[UIApplication sharedApplication] delegate] showAlertWithTitle:@"__ProjectName__" message:[[error userInfo] objectForKey:@"error"]];
-        }
-        else
-            [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
-        blockSelf = nil;
-    }];
 
+    void (^ userSignInBlock)() = ^(void){
+        [signupUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [SCFUtility stopActivityIndicatorFromView:self.view];
+            [SCFUtility handleParseResponseWithError:error success:succeeded];
+            
+            if (succeeded)
+                [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
+            
+            blockSelf = nil;
+        }];
+    };
+    
+    if (_userAddedImage == FALSE) {
+        userSignInBlock();
+    }
+    else{
+        [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded)
+                userSignInBlock();
+            else
+            {
+                [SCFUtility handleParseResponseWithError:error success:succeeded];
+                [SCFUtility stopActivityIndicatorFromView:self.view];
+            }
+            blockSelf = nil;
+        }];
+    }
 }
 
 - (IBAction)takePhotoButtonClick:(id)sender
@@ -265,16 +341,18 @@
     
 	if(image)
 	{
+        _userAddedImage = YES;
+        
         [self.addPhotoButton setImage:image forState:UIControlStateNormal];
         [self.addPhotoButton setImage:image forState:UIControlStateSelected];
         [self.addPhotoButton setImage:image forState:UIControlStateHighlighted];
         
-        [mUserImageFile cancel];
-        mUserImageFile = [PFFile fileWithName:@"userimage.jpg" data:UIImageJPEGRepresentation(image, 0.8)];
-        [signupUser setObject:mUserImageFile forKey:kUserPic];
-        [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSLog(@"Completed uploading of Image , error : %@",error);
-        }];
+//        [mUserImageFile cancel];
+//        mUserImageFile = [PFFile fileWithName:@"userimage.jpg" data:UIImageJPEGRepresentation(image, 0.8)];
+//        [signupUser setObject:mUserImageFile forKey:kUserPic];
+//        [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            NSLog(@"Completed uploading of Image , error : %@",error);
+//        }];
 	}
 }
 
@@ -414,7 +492,7 @@
             }
             else
             {
-                [UIAlertView alertViewWithTitle:NSLocalizedString(@"Wiink", nil)
+                [UIAlertView alertViewWithTitle:NSLocalizedString(@"__ProjectName__", nil)
                                         message:NSLocalizedString(@"No twitter account present. Please login to twitter from system settings.", @"")
                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
                               otherButtonTitles:nil
@@ -437,14 +515,11 @@
     /** changed */
     //    [WIUtility stopActivityIndicatorFromView:self.view];
     
-    
-    
     if([inResponse objectForKey:SCFSocialEngineErrorKey] != nil)
     {
         [self handleSocialNetworkError:[inResponse objectForKey:SCFSocialEngineErrorKey] forSocialType:SocialNetworkType];
         return;
     }
-    
     if (eHTTPResoponseOK == [[inResponse objectForKey:SCFSocialEngineStatusCodeKey] intValue])
     {
         
@@ -457,10 +532,6 @@
         
         [self populateDataWithSocialUser:[[SCFSocialEngineFactory sharedFactory] socialEngineForType:SocialNetworkType].userInfo];
     }
-    else
-    {
-
-    }
 }
 
 - (void)handleSocialNetworkError:(NSError *)iError forSocialType:(WISocialNetworkType)iSocialType
@@ -469,7 +540,7 @@
     {
         [SCFUtility stopActivityIndicatorFromView:self.view];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Wiink", @"")
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
                                                         message:[iError localizedDescription]
                                                        delegate:nil
                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
@@ -483,10 +554,32 @@
     self.emailTextField.text = iSocialUser.email;
     self.firstameField.text = iSocialUser.firstname;
     self.lastNameField.text  = iSocialUser.lastname;
-    
-    //iSocialUser.profileImageUrl
+        
+    if (iSocialUser.profileImageUrl)
+        [self downloadProfileImageFromURLString:iSocialUser.profileImageUrl];
 }
 
+#pragma mark - UITextFieldDelegates
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.emailTextField) {
+        [self.passwordField becomeFirstResponder];
+    }
+    else if (textField == self.passwordField) {
+        [self.firstameField becomeFirstResponder];
+    }
+    else if (textField == self.firstameField) {
+        [self.lastNameField becomeFirstResponder];
+    }
+    else if (textField == self.lastNameField)
+    {
+        [textField resignFirstResponder];
+        [self signUpButtonTapped:nil];
+    }
+    
+	return YES;
+}
 
 - (void)dealloc
 {

@@ -14,10 +14,11 @@ typedef enum {
     eSCFPhotoCaptureTypeCancel,
 } SCFPhotoCaptureType;
 
-@interface SCSignUpViewController : UIViewController<UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate>
+@interface SCSignUpViewController : UIViewController<UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 {
-    PFUser      *signupUser;
+//    PFUser      *signupUser;
     PFFile      *mUserImageFile;
+    BOOL        _userAddedImage;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
@@ -27,6 +28,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITextField *lastNameField;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+
+
 
 - (IBAction)takePhotoButtonClick:(id)sender;
 - (IBAction)facebookButtonAction:(id)sender;

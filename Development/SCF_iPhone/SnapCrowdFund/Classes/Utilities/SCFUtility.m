@@ -2,7 +2,7 @@
 #import "SCFUtility.h"
 #import "StringConstants.h"
 #import "SCFCustomActivityIndicator.h"
-
+#import "SCAppDelegate.h"
 
 #define max(a,b) (a>b?a:b);
 #define             kLoadingTag   3333
@@ -265,6 +265,35 @@ static NSDateFormatter * dateFormatter;
     }
     
     return isValid;
+}
+
++ (void)handleParseResponseWithError:(NSError *)iError success:(BOOL)iSuccess
+{
+    if (iSuccess)
+        return;
+    
+    NSString *the_msgString = nil;
+    
+    if (iError) {
+        
+        id the_error = [[iError userInfo] objectForKey:kAPIResponseErrorKey];
+        the_msgString = the_error;
+        
+        if ([the_error isKindOfClass:[NSError class]]) {
+            the_msgString = [(NSError *)the_error localizedDescription];
+        }
+        
+        NSLog(@"Erorr : %@", iError.localizedDescription);
+    }
+    
+    if (!the_msgString) {
+        return;
+    }
+//    else
+//        the_msgString = @"Oops, Something went wrong. Please try again later.";
+    
+    [(SCAppDelegate *)[[UIApplication sharedApplication] delegate] showAlertWithTitle:@"__ProjectName__"
+                                                                              message:the_msgString];
 }
 
 @end

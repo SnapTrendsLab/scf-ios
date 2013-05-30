@@ -7,18 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCFViewController.h"
 
 
 typedef enum {
     eSCFWebDisplayerAddCreditCard,
     eSCFWebDisplayerAddBankAccount,
-    
+    eSCFWebDisplayerHelp,
+    eSCFWebDisplayerPrivacy,
+    eSCFWebDisplayerTOS,
 }SCFWebDisplayerType;
 
-@interface SCFWebDisplayer : UIViewController
+@interface SCFWebDisplayer : SCFViewController
 
 @property (weak, nonatomic)     IBOutlet UIWebView *webView;
-@property (strong, nonatomic)   NSString *htmlString;
+@property (copy, nonatomic)     NSString *htmlString;
 @property (assign, nonatomic)   SCFWebDisplayerType screenType;
+
+- (id)initWithScrenType:(SCFWebDisplayerType)iScreenType;
 
 @end

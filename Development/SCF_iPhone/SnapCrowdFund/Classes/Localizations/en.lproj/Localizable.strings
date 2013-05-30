@@ -29,3 +29,27 @@
 "Permission for SCF not granted."           = "Permission for SCF not granted.";
 
 // ****************** SIGN IN SCREEN ****************** //
+
+"Done"                          = "Done";
+"Sign Up"                       = "Sign Up";
+"Loading..."                    = "Loading...";
+"Sign In"                       = "Sign In";
+"Forgot Password"               = "Forgot Password";
+"Send"                          = "Send";
+"Back"                          = "Back";
+"Email address"                 = "Email address";
+"Enter your email address to receive \n instructions for resetting your password." = "Enter your email address to receive \n instructions for resetting your password.";
+
+
+// ****************** SETTINGS SCREEN ****************** //
+
+"Settings"                      = "Settings";
+"Logout"                        = "Logout";
+
+
+"An email has been sent to the specified address."              = "An email has been sent to the specified address.";
+"Your Credit Card details have been successfully updated."      = "Your Credit Card details have been successfully updated.";
+"Your Bank Account details have been successfully updated."     = "Your Bank Account details have been successfully updated.";
+
+
+

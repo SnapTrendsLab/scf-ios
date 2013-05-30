@@ -10,4 +10,6 @@
 
 @interface SCFViewController : UIViewController
 
+@property (strong, nonatomic) UIImage *backgroundImage;
+
 @end

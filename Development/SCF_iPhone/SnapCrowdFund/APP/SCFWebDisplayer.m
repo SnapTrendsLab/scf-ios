@@ -10,6 +10,7 @@
 #import "StringConstants.h"
 #import "UIViewController+JASidePanel.h"
 #import "JASidePanelController.h"
+#import "SCFFontDetails.h"
 
 //#import "SBJSON.h"
 
@@ -19,30 +20,36 @@
 
 @implementation SCFWebDisplayer
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithScrenType:(SCFWebDisplayerType)iScreenType
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
+    
     if (self) {
-        // Custom initialization
+        _screenType = iScreenType;
+        [self enableCustomClassForProtocol:YES];
         
         NSNotificationCenter *notifyCenter = [NSNotificationCenter defaultCenter];
         [notifyCenter addObserver:self selector:@selector(addBankAccount:) name:SCFADDBANKACCOUNTNOTIFICATION object:nil];
         [notifyCenter addObserver:self selector:@selector(addCreditCard:) name:SCFADDCREDITCARDNOTIFICATION object:nil];
     }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
-    [self enableCustomClassForProtocol:YES];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     [self customizeNavigationBar];
     
+    if (!self.htmlString) {
+        self.htmlString = [self getHtmlStringToload];
+    }
+    
     if (self.htmlString) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.htmlString]]];
-    }
+    }        
 }
 
 #pragma mark - Memory Handling
@@ -55,6 +62,7 @@
 }
 
 - (void)viewDidUnload {
+    [self.webView setDelegate:nil];
     [self setWebView:nil];
     [super viewDidUnload];
 }
@@ -74,29 +82,36 @@
 
 -(void)customizeNavigationBar
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 29)];
-    //[backButton setBackgroundImage:[UIImage imageNamed:@"back button normal.png"] forState:UIControlStateNormal];
-    //[backButton setBackgroundImage:[UIImage imageNamed:@"back button pressed.png"] forState:UIControlStateHighlighted];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
     [backButton setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [backButton setTitleColor:[UIColor colorWithRed:117/255.0 green:126/255.0 blue:134/255.0 alpha:1.0f] forState:UIControlStateNormal];
     [backButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12]];
-    [backButton.titleLabel setShadowColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+    [backButton setTitleShadowColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
     [backButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
-    //[backButton setContentEdgeInsets:UIEdgeInsetsMake(0, 6, 0, 0)];
     self.navigationItem.leftBarButtonItem = leftItem;
     
+    if (_screenType == eSCFWebDisplayerHelp || _screenType == eSCFWebDisplayerPrivacy || _screenType == eSCFWebDisplayerTOS) {
+        UIImage *backNormalImage = [UIImage imageNamed:@"slide_btn_unpress.png"];
+        [backButton setFrame:CGRectMake(0, 0, backNormalImage.size.width, backNormalImage.size.height)];
+        [backButton setImage:backNormalImage forState:UIControlStateNormal];
+        [backButton setImage:[UIImage imageNamed:@"slide_btn_press.png"] forState:UIControlStateHighlighted];
+        [backButton setTitle:nil forState:UIControlStateNormal];
+    }
+    else{
+        [backButton setImage:[UIImage imageNamed:@"back_btn_unpress.png"] forState:UIControlStateNormal];
+        [backButton setImage:[UIImage imageNamed:@"back_btn_press.png"] forState:UIControlStateHighlighted];
+    }
+        
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 29)];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0]];
-    [titleLabel setTextColor:[UIColor colorWithRed:61/255.0 green:66/255.0 blue:70/255.0 alpha:1.0f]];
-    [titleLabel setShadowColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
-    [titleLabel setShadowOffset:CGSizeMake(0, 1)];
-//    titleLabel.text = self.title;
-    titleLabel.minimumFontSize=15.0;
+    [titleLabel setFont:kAppNavBarTitleFont];
+    [titleLabel setTextColor:kAppNavBarTitleColor];
+    [titleLabel setShadowColor:kAppNavBarTitleShadowColor];
+    [titleLabel setShadowOffset:kAppNavBarTitleShadowOffset];
     titleLabel.numberOfLines = 1;
     
     switch (_screenType) {
@@ -108,6 +123,18 @@
             titleLabel.text = @"Add Bank Account";
             break;
             
+        case eSCFWebDisplayerHelp:
+            titleLabel.text = @"Help Center";
+            break;
+            
+        case eSCFWebDisplayerPrivacy:
+            titleLabel.text = @"Privacy";
+            break;
+            
+        case eSCFWebDisplayerTOS:
+            titleLabel.text = @"Terms of Service";
+            break;
+            
         default:
             break;
     }
@@ -117,6 +144,15 @@
 
 - (void)enableCustomClassForProtocol:(BOOL)iShouldenable
 {
+    switch (self.screenType) {
+        case eSCFWebDisplayerAddCreditCard:
+        case eSCFWebDisplayerAddBankAccount:
+            break;
+            
+        default:
+            return;
+    }
+    
     if (iShouldenable) {
         [NSURLProtocol registerClass:NSClassFromString(@"SCFUrlProtocol")];
 
@@ -126,6 +162,29 @@
     }
 }
 
+- (NSString *)getHtmlStringToload
+{
+    switch (self.screenType) {
+        case eSCFWebDisplayerAddCreditCard:
+            return kAPIAddCreditCardUrl;
+       
+        case eSCFWebDisplayerAddBankAccount:
+            return kAPIAddBankAccountUrl;
+
+            
+        case eSCFWebDisplayerHelp:
+            return @"http://help.yahoo.com/l/us/yahoo/helpcentral/";
+
+        case eSCFWebDisplayerPrivacy:
+            return @"http://www.google.com/";
+
+        case eSCFWebDisplayerTOS:
+            return @"http://www.google.com/";
+            
+        default:
+            break;
+    }
+}
 //#pragma mark - UIWebViewDelegates
 //
 //- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -149,7 +208,21 @@
 
 - (void)backButtonAction:(id)sender
 {
-    [self.sidePanelController showLeftPanelAnimated:YES];
+    switch (self.screenType) {
+        case eSCFWebDisplayerAddCreditCard:
+        case eSCFWebDisplayerAddBankAccount:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+            
+        case eSCFWebDisplayerHelp:
+        case eSCFWebDisplayerPrivacy:
+        case eSCFWebDisplayerTOS:
+            [self.sidePanelController showLeftPanelAnimated:YES];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - Helper Methods
@@ -237,28 +310,35 @@
         return;
     }
     
+    the_receivedData = [the_receivedData objectForKey:kAPIResponseDataKey];
+    
     PFObject *bankAccount = [PFObject objectWithClassName:@"BankAccount"];
     [bankAccount setObject:[the_receivedData objectForKey:@"id"] forKey:@"accountId"];
     [bankAccount setObject:[the_receivedData objectForKey:@"credits_uri"] forKey:@"credis_uri"];
     [bankAccount setObject:[the_receivedData objectForKey:@"uri"] forKey:@"uri"];
-    BOOL saveStatus = [bankAccount save];
-    
-    
-    if (saveStatus == NO) {
-        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"SCF"
-                                                             message:@"Unable to save your Bank Account Details"
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK"
-                                                   otherButtonTitles:nil, nil];
-        [errorAlert show];
-    }
-    
+    [bankAccount saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded == NO) {
+            UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
+                                                                 message:[error localizedDescription]
+                                                                delegate:nil
+                                                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                       otherButtonTitles:nil, nil];
+            [errorAlert show];
+        }
+        else{
+            
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
+                                                             message:NSLocalizedString(@"Your Credit Card details have been successfully updated.", @"")
+                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
 }
 
 - (void)addCreditCard:(NSNotification *)iNotify
 {
     // Converting the request data to json string.
-    NSString  *rspString = [[NSString alloc] initWithData:[iNotify object] encoding:NSUTF8StringEncoding];    
+    NSString  *rspString = [[NSString alloc] initWithData:[iNotify object] encoding:NSUTF8StringEncoding];
     rspString = [rspString stringByReplacingOccurrencesOfString:@"=" withString:@"\":\""];
     rspString = [rspString stringByReplacingOccurrencesOfString:@"&" withString:@"\",\""];
 
@@ -278,7 +358,8 @@
                                         NSLog(@"Result : %@",result);
                                         
                                         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
-                                                                                         message:@"Your Bank Account details have been successfully updated" delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil, nil];
+                                                                                         message:NSLocalizedString(@"Your Bank Account details have been successfully updated.", @"")
+                                                                                        delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil, nil];
                                         [alert show];
                                     }
                                     else

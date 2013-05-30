@@ -17,7 +17,7 @@
 #define TWITTER_CONSUMER_SECRET @"RJM3xHlUpNglzIESLcBPGlayzOWbivrcgU40dswoo"
 
 
-@interface WITwitterEngine : SCFSocialEngine <UIActionSheetDelegate, WICustomPickerDelegate>
+@interface WITwitterEngine : SCFSocialEngine <UIActionSheetDelegate, SCFPickerViewDelegate>
 {
 //    ACAccount *mAccount;
     NSArray *accountsArray;
