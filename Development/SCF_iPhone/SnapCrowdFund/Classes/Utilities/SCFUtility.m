@@ -3,6 +3,7 @@
 #import "StringConstants.h"
 #import "SCFCustomActivityIndicator.h"
 #import "SCAppDelegate.h"
+#import "NSString+UUID.h"
 
 #define max(a,b) (a>b?a:b);
 #define             kLoadingTag   3333
@@ -98,7 +99,7 @@ static NSDateFormatter * dateFormatter;
 + (NSString *)generateTheImageUploadName
 {
 //    NSString * videokey = [NSString stringWithFormat:@"%@/%lf.jpg",@"",[[NSDate date] timeIntervalSince1970]];
-    NSString * videokey = [NSString stringWithFormat:@"%@/%lf.jpg",@"",[[NSDate date] timeIntervalSince1970]];
+    NSString * videokey = [NSString stringWithFormat:@"%@/%lf.jpg",[NSString stringWithNewUUID],[[NSDate date] timeIntervalSince1970]];
     return videokey;
 }
 
@@ -286,6 +287,8 @@ static NSDateFormatter * dateFormatter;
         if ([the_error isKindOfClass:[NSError class]]) {
             the_msgString = [(NSError *)the_error localizedDescription];
         }
+        else
+            the_msgString = iError.localizedDescription;
         
         NSLog(@"Erorr : %@", iError.localizedDescription);
     }

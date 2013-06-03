@@ -10,8 +10,10 @@
 
 #ifdef DEBUG
 
-#define kParseAppKey    @"dtFWBaKPD0DzHcizJjd5vL4yGaPrGJgQqvKPOQ0X"
-#define kParseClientKey @"qOiYgyMzUKsMz9pghBAmilllZbDsGyGRSGyRG9aS"
+//#define kParseAppKey    @"dtFWBaKPD0DzHcizJjd5vL4yGaPrGJgQqvKPOQ0X"
+//#define kParseClientKey @"qOiYgyMzUKsMz9pghBAmilllZbDsGyGRSGyRG9aS"
+#define kParseAppKey    @"mPTZx97h3MIX5vFmjxbufJLTklQmuzWf0WBIsN2H"
+#define kParseClientKey @"FQ6oGEriHsbTiczMmpNE7neEErONY4eHxeMFvPJl"
 
 #else
 

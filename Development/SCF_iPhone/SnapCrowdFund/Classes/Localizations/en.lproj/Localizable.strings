@@ -45,6 +45,21 @@
 
 "Settings"                      = "Settings";
 "Logout"                        = "Logout";
+"Add Bank Account"              = "Add Bank Account";
+"Connect Credit Card"           = "Connect Credit Card";
+"Connect to Facebook"           = "Connect to Facebook";
+"Connect to Twitter"            = "Connect to Twitter";
+"Payments Sent"                 = "Payments Sent";
+"Payment Received"              = "Payment Received";
+"NOTIFICATIONS"                 = "NOTIFICATIONS";
+"CONNECT"                       = "CONNECT";
+"PAYMENT SOURCES"               = "PAYMENT SOURCES";
+"ACCOUNT"                       = "ACCOUNT";
+"Credit Card"                   = "Credit Card";
+"Bank Account"                  = "Bank Account";
+"Edit"                          = "Edit";
+"Password should be atleast 6 digits"   = "Password should be atleast 6 digits";
+
 
 
 "An email has been sent to the specified address."              = "An email has been sent to the specified address.";

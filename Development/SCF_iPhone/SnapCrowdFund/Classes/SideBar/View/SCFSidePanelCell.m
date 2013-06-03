@@ -28,7 +28,7 @@
         [self.textLabel setFont:[UIFont fontWithName:@"Futura" size:20.0]];
         
         self.seperatorImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"line.png"]];
-        [self addSubview:self.seperatorImageView];
+        [self.contentView addSubview:self.seperatorImageView];
         
         self.imageView.contentMode = UIViewContentModeCenter;
     }

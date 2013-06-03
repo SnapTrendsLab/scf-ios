@@ -8,6 +8,7 @@
 
 #import "SCFPickerView.h"
 #import "SCFUtility.h"
+#import "SCFFontDetails.h"
 
 @implementation SCFPickerView
 
@@ -64,7 +65,7 @@
         
                 
         
-        UIImage *buttonBarImage = [UIImage imageNamed:@"header.png"];
+        UIImage *buttonBarImage = [UIImage imageNamed:@"picker_strip.png"];
         mButtonBarImageView = [[UIImageView alloc]initWithImage:buttonBarImage];
         
         
@@ -78,25 +79,25 @@
         CancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         [CancelButton setBackgroundImage:[UIImage imageNamed:@"signin_unpress.png"] forState:UIControlStateNormal];
         [CancelButton setBackgroundImage:[UIImage imageNamed:@"signin_press.png"] forState:UIControlStateHighlighted];
-        [CancelButton setTitleColor:[UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:.75f] forState:UIControlStateNormal];
+        [CancelButton setTitleColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f] forState:UIControlStateNormal];
         
-        UIButton *DoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage * doneButtonImageNormal = [UIImage imageNamed:@"signin_unpress.png" ];
-        DoneButton.frame = CGRectMake( buttonBarImage.size.width - doneButtonImageNormal.size.width - 10 , 8.0f, doneButtonImageNormal.size.width, doneButtonImageNormal.size.height);
+        doneButton.frame = CGRectMake( buttonBarImage.size.width - doneButtonImageNormal.size.width - 10 , 8.0f, doneButtonImageNormal.size.width, doneButtonImageNormal.size.height);
         
-        
-        [DoneButton setTitle:NSLocalizedString(@"Done",@"") forState:UIControlStateNormal];
-        [DoneButton addTarget:self action:@selector(DoneButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        DoneButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
-        DoneButton.titleLabel.shadowOffset=CGSizeMake(0, -0.5f);
-        [DoneButton setBackgroundImage:doneButtonImageNormal forState:UIControlStateNormal];
-        [DoneButton setBackgroundImage:[UIImage imageNamed:@"signin_press.png" ] forState:UIControlStateHighlighted];
+        [doneButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+        [doneButton setTitleShadowColor:kNavSideBlueButtonShadowNormalColor forState:UIControlStateNormal];
+        [doneButton setBackgroundImage:[UIImage imageNamed:@"done_normal.png"] forState:UIControlStateNormal];
+        [doneButton setBackgroundImage:[UIImage imageNamed:@"done_pressed.png"] forState:UIControlStateHighlighted];
+        [doneButton addTarget:self action:@selector(doneButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [doneButton setTitleColor:kNavSideBlueButtonTitleNormalColor forState:UIControlStateNormal];
+        doneButton.titleLabel.font = kNavSideButtonTitleFont;
+        doneButton.titleLabel.shadowOffset = kNavSideButtonShadowOffset;
         
         
         
         [mButtonBarImageView setUserInteractionEnabled:YES];
-        [mButtonBarImageView addSubview:DoneButton];
+        [mButtonBarImageView addSubview:doneButton];
         [mButtonBarImageView addSubview:CancelButton];
         [self addSubview:mButtonBarImageView];
         
@@ -138,7 +139,7 @@
     [self animateDismissView];
 }
 
-- (void) DoneButtonTapped : (id) sender
+- (void) doneButtonTapped : (id) sender
 {
     if (mPickerType == eSelectBirthdayPicker || (mPickerType == eSelectActivityStartPicker) || (mPickerType == eSelectActivityEndPicker))
     {

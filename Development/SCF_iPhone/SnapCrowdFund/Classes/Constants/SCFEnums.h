@@ -55,3 +55,12 @@ typedef enum {
     eSCFActivityGroup,
     eSCFActivityPersonal,
 }SCFActivityType;
+
+typedef enum {
+    eSCFSettingSectionAccounts,
+    eSCFSettingSectionPayment,
+    eSCFSettingSectionConnect,
+    eSCFSettingSectionNotification,
+} SCFSettingSection;
+
+

@@ -16,7 +16,6 @@ typedef enum {
 
 @interface SCSignUpViewController : UIViewController<UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 {
-//    PFUser      *signupUser;
     PFFile      *mUserImageFile;
     BOOL        _userAddedImage;
 }

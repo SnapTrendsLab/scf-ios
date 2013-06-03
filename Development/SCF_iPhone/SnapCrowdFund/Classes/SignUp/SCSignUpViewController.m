@@ -162,6 +162,16 @@
         return NO;
     }
     
+    if ([trimmedpassword length] < 6)
+    {
+        // Text was empty or only whitespace.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"__ProjectName__", @"")
+                                                        message:NSLocalizedString(@"Password should be atleast 6 digits", @"")
+                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"")  otherButtonTitles:nil, nil];
+        [alert show];
+        return NO;
+    }
+    
     return retVal;
 }
 
@@ -235,42 +245,15 @@
     signupUser.username = self.emailTextField.text;
     signupUser.password = self.passwordField.text;
     signupUser.email = self.emailTextField.text;
-
+    [signupUser setUserFirstName:self.firstameField.text];
+    [signupUser setUserLastName:self.lastNameField.text];
     
     
-    [signupUser setObject:self.firstameField.text forKey:kUserFirstName];
-    [signupUser setObject:self.lastNameField.text forKey:kUserLastName];
+//    [signupUser setObject:self.firstameField.text forKey:kUserFirstName];
+//    [signupUser setObject:self.lastNameField.text forKey:kUserLastName];
 //    [signupUser setObject:@"415-392-0202" forKey:@"phone"];
     
     __weak id blockSelf = self;
-    
-    
-
-//    if (mUserImageFile && mUserImageFile.isDirty) {
-//        NSLog(@"Dirty while image uploading");
-//        [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            [SCFUtility stopActivityIndicatorFromView:self.view];
-//            [SCFUtility handleParseResponseWithError:error success:succeeded];
-//            
-//            if (succeeded)
-//                [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
-//            
-//            blockSelf = nil;
-//        }];
-//        return;
-//    }
-//    
-//    
-//    [SCFUtility startActivityIndicatorOnView:self.view withText:@"Loading..." BlockUI:YES];
-//    [signupUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        [SCFUtility stopActivityIndicatorFromView:self.view];
-//        [SCFUtility handleParseResponseWithError:error success:succeeded];
-//        
-//        if (succeeded)
-//            [(UIViewController *) blockSelf dismissModalViewControllerAnimated:NO];
-//
-//        blockSelf = nil;
-//    }];
     
     [SCFUtility startActivityIndicatorOnView:self.view withText:NSLocalizedString(@"Loading...", @"") BlockUI:YES];
 
@@ -292,7 +275,7 @@
         userSignInBlock();
     }
     else{
-        mUserImageFile = [PFFile fileWithName:@"userimage.jpg" data:UIImageJPEGRepresentation([self.addPhotoButton imageForState:UIControlStateNormal], 0.6)];
+        mUserImageFile = [PFFile fileWithName:[SCFUtility generateTheImageUploadName] data:UIImageJPEGRepresentation([self.addPhotoButton imageForState:UIControlStateNormal], 0.6)];
         [signupUser setObject:mUserImageFile forKey:kUserPic];
                 NSLog(@"Image upoading ");
         [mUserImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

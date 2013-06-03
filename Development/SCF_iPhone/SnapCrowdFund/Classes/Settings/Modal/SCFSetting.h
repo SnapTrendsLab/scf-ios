@@ -10,4 +10,11 @@
 
 @interface SCFSetting : NSObject
 
+@property (nonatomic, strong)   UIImage *settingImage;
+@property (nonatomic, copy)     NSString *settingName;
+@property (nonatomic, copy)     NSString *settingDetail;
+@property (nonatomic, assign)   BOOL showDetailedImage;
+@property (nonatomic, assign)   BOOL showToggleSwitch;
+@property (nonatomic, assign)   BOOL settingValue;
+
 @end

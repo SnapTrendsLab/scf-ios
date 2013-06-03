@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Balanced.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>SnapCrowdFund.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>C1297EC3174F719D006A2CD2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1E0BAF41758B7DF002E994F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1E0BB131758B8C6002E994F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

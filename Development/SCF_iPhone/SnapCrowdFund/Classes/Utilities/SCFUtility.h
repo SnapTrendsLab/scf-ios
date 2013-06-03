@@ -27,4 +27,7 @@
 // Handles the parse error & displays the alert to user if needed.
 + (void)handleParseResponseWithError:(NSError *)iError success:(BOOL)iSuccess;
 
++ (NSString *)generateTheImageUploadName;
+
+
 @end
