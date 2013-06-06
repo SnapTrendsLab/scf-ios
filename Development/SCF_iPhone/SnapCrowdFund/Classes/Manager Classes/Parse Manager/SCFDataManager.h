@@ -1,13 +1,13 @@
 //
-//  SCFSyncManager.h
+//  SCFDataManager.h
 //  SnapCrowdFund
 //
-//  Created by Sajil on 6/2/13.
+//  Created by Sajil on 6/5/13.
 //  Copyright (c) 2013 snaptrendslab. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface SCFSyncManager : NSObject
+@interface SCFDataManager : NSObject
 
 @end
